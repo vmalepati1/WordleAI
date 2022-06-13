@@ -10,6 +10,13 @@ def expand_shadow_element(element):
   shadow_root = driver.execute_script('return arguments[0].shadowRoot.children', element)
   return shadow_root[1]
 
+def guess_word(word):
+  global driver
+  actions = ActionChains(driver)
+  actions.send_keys(word)
+  actions.send_keys(Keys.ENTER)
+  actions.perform()
+
 def update_evaluations():
   global driver
   global shadow_root_game_app
@@ -52,10 +59,7 @@ close_button.click()
 
 starting_word = 'slate'
 
-actions = ActionChains(driver)
-actions.send_keys(starting_word)
-actions.send_keys(Keys.ENTER)
-actions.perform()
+guess_word(starting_word)
 
 word = 'XXXXX'
 
