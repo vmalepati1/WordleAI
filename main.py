@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 def expand_shadow_element(element):
   shadow_root = driver.execute_script('return arguments[0].shadowRoot.children', element)
@@ -21,3 +22,9 @@ close_button = shadow_root2.find_element(By.TAG_NAME, 'game-icon')
 
 close_button.click()
 
+starting_word = 'slate'
+
+actions = ActionChains(driver)
+actions.send_keys(starting_word)
+actions.send_keys(Keys.ENTER)
+actions.perform()

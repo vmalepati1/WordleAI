@@ -99,3 +99,31 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 DevTools listening on ws://localhost:59550/devtools/browser/d87dc8da-6be0-4719-92d3-7fd3f035f9b0
 Read port: 59591
 1655096256646	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1655096289915	Marionette	INFO	Stopped listening on port 59591
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PGPUParent] Error: RunMessage(msgname=PGPU::Msg_ShutdownVR) Channel closing: too late to send/recv, messages will be lost
+
+1655096341164	geckodriver	INFO	Listening on 127.0.0.1:63675
+1655096344107	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "63676" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\malep\\AppData\\Local\\Temp\\rust_mozprofileFvNqif"
+1655096344628	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:63676
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\malep\\AppData\\Local\\Temp\\rust_mozprofileFvNqif\\search.json.mozlz4", (void 0)))
+1655096347379	Marionette	INFO	Listening on port 63716
+Read port: 63716
+DevTools listening on ws://localhost:63676/devtools/browser/34e370fa-71c6-41be-901f-fc0642b72c5c
+1655096347424	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1655096353762	Marionette	INFO	Stopped listening on port 63716
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+[Parent 1700, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1655096452162	geckodriver	INFO	Listening on 127.0.0.1:64104
+1655096455093	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "64105" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\malep\\AppData\\Local\\Temp\\rust_mozprofileywOcGV"
+1655096455773	Marionette	INFO	Marionette enabled
+WebDriver BiDi listening on ws://localhost:64105
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\malep\\AppData\\Local\\Temp\\rust_mozprofileywOcGV\\search.json.mozlz4", (void 0)))
+1655096458617	Marionette	INFO	Listening on port 64145
+DevTools listening on ws://localhost:64105/devtools/browser/ddba417b-b8c2-45cb-88ac-d23678afca99
+Read port: 64145
+1655096458744	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1655096475722	Marionette	INFO	Stopped listening on port 64145
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
