@@ -57,9 +57,9 @@ def get_word_table(gray_letters, yellow_letters, green_letters, subset=[]):
 
     return table_result
 
-gray_letters = ['s', 'l']
-yellow_letters = {'a': 2, 't': 3}
-green_letters = {'e': 4}
-
-subset = get_word_table(gray_letters, yellow_letters, green_letters)
-subset = get_word_table(gray_letters, yellow_letters, green_letters, subset=subset)
+##gray_letters = ['s', 'l']
+##yellow_letters = {'a': 2, 't': 3}
+##green_letters = {'e': 4}
+##
+##subset = get_word_table(gray_letters, yellow_letters, green_letters)
+##subset = get_word_table(gray_letters, yellow_letters, green_letters, subset=subset)
