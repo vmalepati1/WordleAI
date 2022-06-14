@@ -40,6 +40,12 @@ def update_evaluations():
         if letter not in gray_letters:
           gray_letters.append(letter)
 
+      if evaluation == 'present':
+        yellow_letters[letter] = col
+
+      if evaluation == 'correct':
+        green_letters[letter] = col
+
       # We hit a row that has not been evaluated yet
       if evaluation is None:
         return
@@ -70,3 +76,5 @@ gray_letters = []
 update_evaluations()
 
 print(gray_letters)
+print(yellow_letters)
+print(green_letters)
