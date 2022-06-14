@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from algorithmic import get_word_table
+import time
 
 def expand_shadow_element(element):
   global driver
@@ -67,14 +69,27 @@ starting_word = 'slate'
 
 guess_word(starting_word)
 
-word = 'XXXXX'
-
 green_letters = {}
 yellow_letters = {}
 gray_letters = []
 
-update_evaluations()
+subset = []
 
-print(gray_letters)
-print(yellow_letters)
-print(green_letters)
+for i in range(5):
+  update_evaluations()
+
+  if len(green_letters) == 5:
+    print('Done!')
+    break
+  
+  subset = get_word_table(gray_letters, yellow_letters, green_letters, subset=subset)
+
+  sorted_subset = sorted(subset[1:], key=lambda x: x[1], reverse=True)
+
+  best_word = sorted_subset[0][0]
+
+  time.sleep(3)
+
+  guess_word(best_word)
+
+  
