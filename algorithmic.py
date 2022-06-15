@@ -21,10 +21,17 @@ def get_word_table(gray_letters, yellow_letters, green_letters, subset=[]):
             # Innocent till proven guilty
             viable_word = True
 
-            for letter in gray_letters:
+            for letter, idx in gray_letters.items():
                 if letter in word:
-                    viable_word = False
-                    break
+                    if letter not in yellow_letters and letter not in green_letters:
+                        viable_word = False
+                        break
+                    else:
+                        indices = [pos for pos, char in enumerate(word) if char == letter]
+
+                        if idx in indices:
+                            viable_word = False
+                            break
 
             if viable_word is True:
                 for letter, idx in yellow_letters.items():

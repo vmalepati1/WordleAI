@@ -39,8 +39,7 @@ def update_evaluations():
       letter = tile.get_attribute('letter')
 
       if evaluation == 'absent':
-        if letter not in gray_letters:
-          gray_letters.append(letter)
+        gray_letters[letter] = col
 
       if evaluation == 'present':
         yellow_letters[letter] = col
@@ -71,7 +70,7 @@ guess_word(starting_word)
 
 green_letters = {}
 yellow_letters = {}
-gray_letters = []
+gray_letters = {}
 
 subset = []
 
@@ -81,10 +80,16 @@ for i in range(5):
   if len(green_letters) == 5:
     print('Done!')
     break
+
+  print(gray_letters)
+  print(yellow_letters)
+  print(green_letters)
   
   subset = get_word_table(gray_letters, yellow_letters, green_letters, subset=subset)
 
   sorted_subset = sorted(subset[1:], key=lambda x: x[1], reverse=True)
+
+  print(sorted_subset)
 
   best_word = sorted_subset[0][0]
 
