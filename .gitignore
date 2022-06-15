@@ -142,6 +142,9 @@ $RECYCLE.BIN/
 .gradle
 build/
 
+# Python cache
+__pycache__/
+
 # Ignore Gradle GUI config
 gradle-app.setting
 
