@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 from tqdm import tqdm
 
-def get_word_table(gray_letters, yellow_letters, green_letters, subset=[]):
+def get_word_table(gray_letters, yellow_letters, green_letters, subset=[], verbose=True):
     if len(subset) == 0:
         csv_file = open('dataset.csv')
         subset = csv.reader(csv_file, delimiter=',')
@@ -13,7 +13,7 @@ def get_word_table(gray_letters, yellow_letters, green_letters, subset=[]):
 
     table_result.append(['word', 'freq'])
         
-    for row in tqdm(subset):
+    for row in (tqdm(subset) if verbose else subset):
         if line_count >= 1:
             word = row[0]
             freq = row[1] # Higher indicates more frequent
