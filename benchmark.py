@@ -46,16 +46,12 @@ with open('solution_words.txt') as words:
         for i in range(6):
             evaluate_word(word_to_guess, solution_word, gray_letters, yellow_letters, green_letters)
             
-            if len(green_letters) == 5:
+            if solution_word == word_to_guess:
                 # print(solution_word == word_to_guess)
                 num_tries.append(i + 1)
                 successful_trials += 1
                 break
             elif i == 5:
-                print(green_letters)
-                print(word_to_guess)
-                print(solution_word)
-                
                 unsuccessful_trials += 1
 
             subset = get_word_table(gray_letters, yellow_letters, green_letters, subset=subset, verbose=False)
