@@ -50,7 +50,11 @@ class ModifiedTensorBoard(TensorBoard):
         self._write_logs(stats, self.step)
 
 class DQNAgent:
-    def __init__(self):
+    def __init__(self, obs_size, word_list, hidden_size):
+        self.obs_size = obs_size
+        self.word_list = word_list
+        self.hidden_size = hidden_size
+        
         # Main model
         self.model = self.create_model()
         
@@ -62,13 +66,13 @@ class DQNAgent:
 
         self.tensorboard = ModifiedTensorBoard()
         
-    def create_model(self, obs_size, hidden_size):
+    def create_model(self):
         word_width = 26*5
         
         model = Sequential()
-        model.add(Dense(hidden_size, activation='linear', input_shape=obs_size)),
+        model.add(Dense(self.hidden_size, activation='linear', input_shape=self.obs_size)),
         model.add(Activation(activations.relu)),
-        model.add(Dense(hidden_size, activation='linear')),
+        model.add(Dense(self.hidden_size, activation='linear')),
         model.add(Activation(activations.relu)),
         model.add(Dense(word_width, activation='linear'))
 
@@ -141,4 +145,6 @@ class DQNAgent:
 random.seed(1)
 np.random.seed(1)
 tf.random.set_seed(1)
+
+
         
