@@ -17,6 +17,13 @@ MIN_REPLAY_MEMORY_SIZE = 1_000  # Minimum number of steps in a memory to start t
 MINIBATCH_SIZE = 64  # How many steps (samples) to use for training
 UPDATE_TARGET_EVERY = 5  # Terminal states (end of episodes)
 
+EPISODES = 20_000
+
+# Exploration settings
+epsilon = 1  # not a constant, going to be decayed
+EPSILON_DECAY = 0.99975
+MIN_EPSILON = 0.001
+
 # Own Tensorboard class
 class ModifiedTensorBoard(TensorBoard):
 
@@ -51,9 +58,16 @@ class ModifiedTensorBoard(TensorBoard):
 
 class DQNAgent:
     def __init__(self, obs_size, word_list, hidden_size):
+        self.word_width = 26*5
         self.obs_size = obs_size
-        self.word_list = word_list
         self.hidden_size = hidden_size
+
+        word_array = np.zeros((word_width, len(word_list)))
+        for i, word in enumerate(word_list):
+            for j, c in enumerate(word):
+                word_array[j*26 + (ord(c) - ord('A')), i] = 1
+
+        self.words = word_array
         
         # Main model
         self.model = self.create_model()
@@ -67,14 +81,12 @@ class DQNAgent:
         self.tensorboard = ModifiedTensorBoard()
         
     def create_model(self):
-        word_width = 26*5
-        
         model = Sequential()
         model.add(Dense(self.hidden_size, activation='linear', input_shape=self.obs_size)),
         model.add(Activation(activations.relu)),
         model.add(Dense(self.hidden_size, activation='linear')),
         model.add(Activation(activations.relu)),
-        model.add(Dense(word_width, activation='linear'))
+        model.add(Dense(self.word_width, activation='linear'))
 
         model.compile(loss=Huber(), optimizer=Adam(lr=0.001), metrics=['accuracy'])
 
@@ -99,12 +111,12 @@ class DQNAgent:
         minibatch = random.sample(self.replay_memory, MINIBATCH_SIZE)
 
         # Get current states from minibatch, then query NN model for Q values
-        current_states = np.array([transition[0] for transition in minibatch])/255
+        current_states = np.array([transition[0] for transition in minibatch])
         current_qs_list = self.model.predict(current_states)
 
         # Get future states from minibatch, then query NN model for Q values
         # When using target network, query it, otherwise main network should be queried
-        new_current_states = np.array([transition[3] for transition in minibatch])/255
+        new_current_states = np.array([transition[3] for transition in minibatch])
         future_qs_list = self.target_model.predict(new_current_states)
 
         X = []
@@ -146,5 +158,14 @@ random.seed(1)
 np.random.seed(1)
 tf.random.set_seed(1)
 
+agent = DQNAgent()
+
+for episode in tqdm(range(1, EPISODES + 1), ascii=True, unit='episodes'):
+    # Update tensorboard step every episode
+    agent.tensorboard.step = episode
+
+    # Restarting episode - reset episode reward and step number
+    episode_reward = 0
+    step = 1
 
         
