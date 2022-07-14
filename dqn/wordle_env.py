@@ -1,4 +1,6 @@
+import dqn.state
 from dqn.state import WordleState
+import numpy as np
 
 REWARD = 10
 
@@ -8,6 +10,8 @@ class WordleEnv:
         self.words = words
         self.max_turns = max_turns
         self.allowable_words = allowable_words
+        self.observation_space_size = len(dqn.state.new(self.max_turns))
+        self.action_space_size = len(self.words)
 
         if not self.allowable_words:
             self.allowable_words = len(self.words)
@@ -20,6 +24,8 @@ class WordleEnv:
         self.state = dqn.state.new(self.max_turns)
         self.done = False
         self.goal_word = int(np.random.random()*self.allowable_words)
+
+        return self.state.copy()
 
     def step(self, action: int):
         if self.done:
@@ -37,7 +43,7 @@ class WordleEnv:
         if action == self.goal_word:
             self.done = True
             #reward = REWARD
-            if wordle.state.remaining_steps(self.state) == self.max_turns-1:
+            if dqn.state.remaining_steps(self.state) == self.max_turns-1:
                 reward = 0#-10*REWARD  # No reward for guessing off the bat
             else:
                 #reward = REWARD*(self.state.remaining_steps() + 1) / self.max_turns
