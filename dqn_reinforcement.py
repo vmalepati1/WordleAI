@@ -7,6 +7,7 @@ import os
 from dqn.agent import DQNAgent
 from dqn.wordle_env import WordleEnv
 from tqdm import tqdm
+from load_words import _load_words
 
 VALID_WORDS_PATH = 'words.txt'
 
@@ -24,14 +25,6 @@ AGGREGATE_STATS_EVERY = 50  # episodes
 MIN_REWARD = 10
 
 MODEL_NAME = '2x256'
-
-def _load_words(limit=None):
-    with open(VALID_WORDS_PATH, 'r') as f:
-        lines = [x.strip().upper() for x in f.readlines()]
-        if not limit:
-            return lines
-        else:
-            return lines[:limit]
 
 # Create models folder
 if not os.path.isdir('models'):

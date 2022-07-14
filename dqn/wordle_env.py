@@ -23,9 +23,15 @@ class WordleEnv:
     def reset(self):
         self.state = dqn.state.new(self.max_turns)
         self.done = False
-        self.goal_word = int(np.random.random()*self.allowable_words)
+        self.goal_word_idx = int(np.random.random()*self.allowable_words)
 
         return self.state.copy()
+
+    def set_goal_word(self, goal_word: str):
+        self.goal_word_idx = self.words.index(goal_word)
+
+    def set_goal_id(self, goal_id: int):
+        self.goal_word_idx = goal_id
 
     def step(self, action: int):
         if self.done:
@@ -37,10 +43,10 @@ class WordleEnv:
             )
         self.state = dqn.state.update(state=self.state,
                                         word=self.words[action],
-                                        goal_word=self.words[self.goal_word])
+                                        goal_word=self.words[self.goal_word_idx])
 
         reward = 0
-        if action == self.goal_word:
+        if action == self.goal_word_idx:
             self.done = True
             #reward = REWARD
             if dqn.state.remaining_steps(self.state) == self.max_turns-1:
