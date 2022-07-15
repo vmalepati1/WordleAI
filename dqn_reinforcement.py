@@ -21,8 +21,8 @@ EPSILON_DECAY = 0.99975
 MIN_EPSILON = 0.001
 
 # Stats settings
-AGGREGATE_STATS_EVERY = 50  # episodes
-MIN_REWARD = 10
+AGGREGATE_STATS_EVERY = 15  # episodes
+MIN_REWARD = 0
 
 MODEL_NAME = '2x256'
 
@@ -35,9 +35,9 @@ random.seed(1)
 np.random.seed(1)
 tf.random.set_seed(1)
 
-words = _load_words(10)
+words = _load_words(100)
 
-env = WordleEnv(words, 6)
+env = WordleEnv(words, 6, allowable_words=1)
 
 agent = DQNAgent(env.observation_space_size, words, 256)
 
@@ -52,7 +52,7 @@ for episode in tqdm(range(1, EPISODES + 1), ascii=True, unit='episodes'):
 
     # Reset environment and get initial state
     current_state = env.reset()
-
+    
     # Reset flag and start iterating until episode ends
     done = False
     while not done:
@@ -86,6 +86,8 @@ for episode in tqdm(range(1, EPISODES + 1), ascii=True, unit='episodes'):
         max_reward = max(ep_rewards[-AGGREGATE_STATS_EVERY:])
         agent.tensorboard.update_stats(reward_avg=average_reward, reward_min=min_reward, reward_max=max_reward, epsilon=epsilon)
 
+        print('Hello')
+        print(average_reward)
         # Save model, but only when min reward is greater or equal a set value
         if min_reward >= MIN_REWARD:
             agent.model.save(f'models/{MODEL_NAME}__{max_reward:_>7.2f}max_{average_reward:_>7.2f}avg_{min_reward:_>7.2f}min__{int(time.time())}.model')

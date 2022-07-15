@@ -14,7 +14,7 @@ import tensorflow as tf
 
 class DQNAgent:
     def __init__(self, obs_size, word_list, hidden_size,
-                 replay_mem_size=50_000, min_replay_mem_size=1_000, minibatch_size=64, update_target_every=5, discount=0.99):
+                 replay_mem_size=1_000, min_replay_mem_size=1_000, minibatch_size=64, update_target_every=10, discount=0.99):
         self.word_width = 26*5
         self.obs_size = obs_size
         self.hidden_size = hidden_size
@@ -52,7 +52,7 @@ class DQNAgent:
         model.add(Activation(activations.relu)),
         model.add(Dense(self.word_width, activation='linear'))
 
-        model.compile(loss=Huber(), optimizer=Adam(lr=0.001), metrics=['accuracy'])
+        model.compile(loss=Huber(), optimizer=Adam(lr=1e-2), metrics=['accuracy'])
 
         return model
 
