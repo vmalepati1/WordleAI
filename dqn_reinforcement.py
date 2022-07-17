@@ -35,7 +35,7 @@ random.seed(1)
 np.random.seed(1)
 tf.random.set_seed(1)
 
-words = _load_words(100)
+words = _load_words(10)
 
 env = WordleEnv(words, 6, allowable_words=1)
 
@@ -61,11 +61,13 @@ for episode in tqdm(range(1, EPISODES + 1), ascii=True, unit='episodes'):
         if np.random.random() > epsilon:
             # Get action from Q table
             q_table = np.asarray(agent.get_qs(current_state))
-            argmax_layer = np.dot(q_table, agent.words)
-            action = np.argmax(argmax_layer)
+            
+            action = np.argmax(q_table)
         else:
             # Get random action
             action = np.random.randint(0, env.action_space_size)
+
+        # print('Action: ' + env.words[action] + ', goal: ' + env.words[env.goal_word_idx])
 
         new_state, reward, done = env.step(action)
 
@@ -86,7 +88,6 @@ for episode in tqdm(range(1, EPISODES + 1), ascii=True, unit='episodes'):
         max_reward = max(ep_rewards[-AGGREGATE_STATS_EVERY:])
         agent.tensorboard.update_stats(reward_avg=average_reward, reward_min=min_reward, reward_max=max_reward, epsilon=epsilon)
 
-        print('Hello')
         print(average_reward)
         # Save model, but only when min reward is greater or equal a set value
         if min_reward >= MIN_REWARD:
