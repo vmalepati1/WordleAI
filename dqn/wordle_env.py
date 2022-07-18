@@ -48,12 +48,12 @@ class WordleEnv:
         reward = 0
         if action == self.goal_word_idx:
             self.done = True
-            #reward = REWARD
-            if dqn.state.remaining_steps(self.state) == self.max_turns-1:
-                reward = 0#-10*REWARD  # No reward for guessing off the bat
-            else:
-                #reward = REWARD*(self.state.remaining_steps() + 1) / self.max_turns
-                reward = REWARD
+            reward = REWARD
+##            if dqn.state.remaining_steps(self.state) == self.max_turns-1:
+##                reward = 0#-10*REWARD  # No reward for guessing off the bat
+##            else:
+##                #reward = REWARD*(self.state.remaining_steps() + 1) / self.max_turns
+##                reward = REWARD
         elif dqn.state.remaining_steps(self.state) == 0:
             self.done = True
             reward = -REWARD

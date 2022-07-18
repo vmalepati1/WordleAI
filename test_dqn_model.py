@@ -2,12 +2,18 @@ import keras
 from load_words import _load_words
 from dqn.wordle_env import WordleEnv
 import numpy as np
-
-model = keras.models.load_model('models/2x256____10.00max___10.00avg___10.00min__1657823083.model')
+import tensorflow as tf
+from dqn.agent import DQNAgent
 
 words = _load_words(10)
 
-env = WordleEnv(words, 6)
+agent = DQNAgent(417, words, 256)
+
+model = keras.models.load_model('models/2x256____10.00max___10.00avg___10.00min__1658100953.model', custom_objects={
+    'tensordot': agent.tensordot
+})
+
+env = WordleEnv(words, 6, allowable_words=1)
 
 print('Vocab:')
 print(words)
@@ -34,8 +40,7 @@ success = False
 while not done:
     qs = model.predict(np.array(current_state).reshape(-1, *current_state.shape))[0]
     q_table = np.asarray(qs)
-    argmax_layer = np.dot(q_table, word_array)
-    action = np.argmax(argmax_layer)
+    action = np.argmax(q_table)
 
     print(env.words[action])
 

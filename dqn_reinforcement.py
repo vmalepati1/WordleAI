@@ -8,16 +8,17 @@ from dqn.agent import DQNAgent
 from dqn.wordle_env import WordleEnv
 from tqdm import tqdm
 from load_words import _load_words
+from math import exp, log
 
 VALID_WORDS_PATH = 'words.txt'
 
 DISCOUNT = 0.99
 
-EPISODES = 20_000
+EPISODES = 1_000
 
 # Exploration settings
 epsilon = 1  # not a constant, going to be decayed
-EPSILON_DECAY = 0.99975
+EPSILON_DECAY = exp(log(0.01)/EPISODES)
 MIN_EPSILON = 0.001
 
 # Stats settings
@@ -61,7 +62,7 @@ for episode in tqdm(range(1, EPISODES + 1), ascii=True, unit='episodes'):
         if np.random.random() > epsilon:
             # Get action from Q table
             q_table = np.asarray(agent.get_qs(current_state))
-            
+
             action = np.argmax(q_table)
         else:
             # Get random action
